@@ -645,18 +645,25 @@
         document.body.classList.remove('loading');
         document.body.style.overflowY = "auto";
 
-        // Wait for DOM and GSAP to load
-        document.addEventListener("DOMContentLoaded", (event) => {
-            // Check if GSAP is loaded, if not wait a bit
-            if (typeof gsap === 'undefined') {
-                setTimeout(initAnimations, 100);
-                return;
+        // Wait for DOM and GSAP to load (with retry mechanism)
+        function waitForGSAP(callback, maxAttempts = 20, attempt = 0) {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                callback();
+            } else if (attempt < maxAttempts) {
+                setTimeout(() => waitForGSAP(callback, maxAttempts, attempt + 1), 50);
+            } else {
+                // Fallback: Hide loader even if GSAP doesn't load
+                const loader = document.getElementById('loader');
+                if (loader) loader.style.display = 'none';
             }
-            initAnimations();
+        }
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            waitForGSAP(initAnimations);
         });
 
         function initAnimations() {
-            if (typeof gsap === 'undefined') return;
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
             
             gsap.registerPlugin(ScrollTrigger);
 
