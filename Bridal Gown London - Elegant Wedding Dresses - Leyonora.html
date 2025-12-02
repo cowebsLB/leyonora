@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leyonora | Modern Bridal</title>
+    
+    <!-- 1. TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social/media icons etc. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- 3. GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body { 
+            font-family: 'DM Sans', sans-serif; 
+            overflow-x: hidden; 
+            background-color: #ffffff; 
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, .serif { 
+            font-family: 'Playfair Display', serif; 
+        }
+        
+        /* Hide scrollbar during initial load animation */
+        body.loading { overflow: hidden; height: 100vh; }
+        
+        /* Image Hover Zoom Effect */
+        .img-hover-zoom { overflow: hidden; }
+        .img-hover-zoom img { 
+            transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            will-change: transform;
+        }
+        .img-hover-zoom:hover img { 
+            transform: scale(1.08); 
+        }
+        
+        /* Parallax images GPU hint */
+        .hero-bg img,
+        .footer-bg img {
+            will-change: transform;
+        }
+        
+        /* Desktop-specific improvements */
+        @media (min-width: 1280px) {
+            .img-hover-zoom:hover img { 
+                transform: scale(1.1); 
+            }
+        }
+
+        /* Utility to hide text for reveal animations */
+        .overflow-hidden-y { overflow-y: hidden; }
+        .reveal-span { display: inline-block; transform: translateY(100%); }
+
+        /* Desktop nav behaviour */
+        .nav-main {
+            transition: padding 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease;
+        }
+        .nav-main.scrolled {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            background-color: rgba(0, 0, 0, 0.55);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+        }
+
+        /* Dropdown menus on desktop */
+        .nav-dropdown {
+            position: relative;
+        }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-top: 0.9rem;
+            padding: 0.75rem 1.25rem;
+            background-color: rgba(0,0,0,0.9);
+            border-radius: 9999px;
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 6px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            white-space: nowrap;
+        }
+        .nav-dropdown.open .nav-dropdown-menu,
+        .nav-dropdown:hover .nav-dropdown-menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, 0);
+        }
+
+        /* Mobile menu touch targets */
+        .mobile-link {
+            display: inline-block;
+            padding: 1rem 0.5rem;
+            width: 100%;
+            text-align: center;
+            touch-action: manipulation;
+        }
+
+        /* Hero title readability on small screens */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 4rem !important;
+                line-height: 1.1;
+            }
+        }
+    </style>
+</head>
+<body class="loading text-slate-900 bg-white">
+
+    <!-- === CURTAIN LOADER === -->
+    <div id="loader" class="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+        <div class="curtain-panel left absolute left-0 top-0 w-1/2 h-full bg-[#1a1a1a] z-20"></div>
+        <div class="curtain-panel right absolute right-0 top-0 w-1/2 h-full bg-[#1a1a1a] z-20"></div>
+        <div class="loader-text z-30 text-white text-5xl md:text-7xl serif italic opacity-0 tracking-widest">Leyonora</div>
+    </div>
+
+    <!-- === MOBILE MENU OVERLAY === -->
+    <div id="mobile-menu" class="fixed inset-0 z-[90] bg-[#111] flex flex-col justify-center items-center opacity-0 pointer-events-none">
+        <!-- Close Button -->
+        <button id="close-menu-btn" title="Close menu" aria-label="Close menu" class="absolute top-8 right-6 md:right-12 text-white hover:text-gray-400 transition duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Menu Links -->
+        <nav class="flex flex-col gap-6 text-center">
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">Home</a>
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">Haute Couture</a>
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">Ready to Wear</a>
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">Bridal</a>
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">The World of Leyonora</a>
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">Blog</a>
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">Contact Us</a>
+            <a href="#" class="mobile-link text-3xl md:text-4xl serif italic text-white hover:text-gray-400 transition duration-300">Login</a>
+            
+            <div class="mt-8 mobile-link">
+                <a href="#" class="text-sm font-bold border border-white/40 px-8 py-4 rounded-full text-white hover:bg-white hover:text-black transition duration-300 uppercase tracking-widest">
+                    Book Appointment
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- === NAVIGATION (Mix Blend Mode for visibility on all backgrounds) === -->
+    <nav class="nav-main fixed w-full z-50 top-0 py-6 md:py-8 lg:py-10 pr-6 md:pr-12 lg:pr-16 xl:pr-20 pl-0 md:pl-2 lg:pl-3 xl:pl-4 flex justify-between items-center mix-blend-difference text-white">
+        <div class="text-2xl md:text-3xl lg:text-4xl serif font-semibold tracking-widest uppercase cursor-pointer">Leyonora</div>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden xl:flex gap-6 2xl:gap-8 text-[10px] lg:text-xs font-medium tracking-[0.14em] uppercase items-center">
+            <!-- Home -->
+            <a href="#" class="relative group hover:opacity-80 transition-opacity whitespace-nowrap">
+                Home
+                <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <!-- Collections dropdown -->
+            <div class="nav-dropdown">
+                <button class="relative group hover:opacity-80 transition-opacity whitespace-nowrap flex items-center gap-1">
+                    <span>Collections</span>
+                    <span class="text-[8px] mt-[1px]"><i class="fa-solid fa-chevron-down"></i></span>
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="hover:text-white/70 transition">Haute Couture</a>
+                    <a href="#" class="hover:text-white/70 transition">Ready to Wear</a>
+                    <a href="#" class="hover:text-white/70 transition">Bridal</a>
+                </div>
+            </div>
+
+            <!-- Media / World dropdown -->
+            <div class="nav-dropdown">
+                <button class="relative group hover:opacity-80 transition-opacity whitespace-nowrap flex items-center gap-1">
+                    <span>Media</span>
+                    <span class="text-[8px] mt-[1px]"><i class="fa-solid fa-chevron-down"></i></span>
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="hover:text-white/70 transition">The World of Leyonora</a>
+                    <a href="#" class="hover:text-white/70 transition">Blog</a>
+                </div>
+            </div>
+
+            <!-- Contact & Login always visible -->
+            <a href="#" class="relative group hover:opacity-80 transition-opacity whitespace-nowrap">
+                Contact
+                <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#" class="relative group hover:opacity-80 transition-opacity whitespace-nowrap">
+                Login
+                <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </div>
+
+        <div class="hidden xl:block ml-4 2xl:ml-6">
+            <a href="#" class="text-[10px] lg:text-xs font-bold border border-[#f7e1c5]/70 bg-[#f7e1c5]/5 px-5 lg:px-6 py-2.5 lg:py-3 rounded-full hover:bg-[#f7e1c5] hover:text-black transition duration-300 uppercase tracking-[0.2em] whitespace-nowrap shadow-[0_0_25px_rgba(247,225,197,0.35)]">
+                Book Appointment
+            </a>
+        </div>
+
+        <!-- Mobile Menu Icon (Hamburger) -->
+        <div id="open-menu-btn" class="xl:hidden text-white cursor-pointer hover:opacity-70 transition duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+            </svg>
+        </div>
+    </nav>
+
+    <!-- === HERO SECTION (Parallax) === -->
+    <header class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+        <!-- Parallax Background Image -->
+        <!-- Using the high-res images found in the previous turn -->
+        <div class="hero-bg absolute inset-0 w-full h-[120%] -top-[10%] bg-black">
+            <img 
+                src="https://leyonora.com/wp-content/uploads/2025/09/HP_Slider1.webp" 
+                class="w-full h-full object-cover object-top opacity-80" 
+                alt="Bridal Gown Hero"
+                onerror="this.src='https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=2574&auto=format&fit=crop'"
+            >
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+
+        <!-- Hero Text -->
+        <div class="relative z-10 text-center text-white px-4 md:px-8 lg:px-12 mix-blend-overlay max-w-7xl mx-auto">
+            <div class="overflow-hidden-y mb-4 lg:mb-6">
+                <p class="hero-subtitle reveal-span uppercase tracking-[0.4em] text-xs md:text-sm lg:text-base xl:text-lg font-medium">
+                    The Couture House
+                </p>
+            </div>
+            <div class="overflow-hidden-y">
+                <h1 class="hero-title reveal-span text-5xl md:text-8xl lg:text-9xl xl:text-[12rem] 2xl:text-[14rem] italic leading-[1.1] md:leading-[1.1]">
+                    Bridal London
+                </h1>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 lg:bottom-16 left-1/2 -translate-x-1/2 text-white/50 text-xs lg:text-sm tracking-widest uppercase animate-bounce">
+            Scroll
+        </div>
+    </header>
+
+    <!-- === INTRO SECTION === -->
+    <section class="py-24 md:py-32 lg:py-40 xl:py-48 px-6 md:px-12 lg:px-20 xl:px-24 bg-white relative z-20">
+        <div class="max-w-6xl xl:max-w-7xl mx-auto text-center">
+            <div class="overflow-hidden-y mb-8 lg:mb-12">
+                <h2 class="intro-headline reveal-text text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl md:leading-tight lg:leading-tight text-[#1a1a1a]">
+                    Where Lebanese craftsmanship<br> <span class="italic text-slate-400">meets</span> London elegance.
+                </h2>
+            </div>
+            <div class="overflow-hidden-y">
+                <p class="intro-body reveal-text text-slate-500 leading-relaxed text-sm md:text-lg lg:text-xl xl:text-2xl max-w-3xl xl:max-w-4xl mx-auto font-light">
+                    At Leyonora, we create exquisite bespoke designs for brides worldwide. 
+                    Timeless silhouettes blended with modern trends, crafted from the finest fabrics 
+                    to ensure you look extraordinary on your special day.
+                </p>
+            </div>
+            
+            <div class="mt-16 lg:mt-20 xl:mt-24 h-px w-24 lg:w-32 bg-black/10 mx-auto reveal-line scale-x-0"></div>
+        </div>
+    </section>
+
+    <!-- === COLLECTIONS GRID === -->
+    <!-- Mimicking a Webflow CMS Collection List -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 h-auto lg:h-[110vh] xl:h-[120vh] 2xl:h-[130vh] w-full">
+        
+        <!-- Item 1: Bridal -->
+        <div class="group relative h-[70vh] lg:h-full img-hover-zoom cursor-pointer border-r border-white/10 overflow-hidden">
+            <img 
+                src="https://leyonora.com/wp-content/uploads/2025/08/Bridal-homepage-1.webp" 
+                class="w-full h-full object-cover" 
+                alt="Bridal"
+                loading="lazy"
+                onerror="this.src='https://images.unsplash.com/photo-1546193430-c2d207739ed7?q=80&w=2574&auto=format&fit=crop'"
+            >
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition duration-700"></div>
+            
+            <div class="absolute bottom-10 lg:bottom-12 xl:bottom-16 left-10 lg:left-12 xl:left-16 z-10 text-white">
+                <p class="text-xs lg:text-sm uppercase tracking-[0.3em] mb-2 lg:mb-3 opacity-70 group-hover:opacity-100 transition duration-500 translate-y-4 group-hover:translate-y-0">Collection</p>
+                <h3 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl serif italic group-hover:-translate-y-2 transition duration-700 ease-out">Bridal</h3>
+                <div class="w-0 group-hover:w-full h-px bg-white mt-4 lg:mt-6 transition-all duration-700"></div>
+            </div>
+        </div>
+
+        <!-- Item 2: Haute Couture -->
+        <div class="group relative h-[70vh] lg:h-full img-hover-zoom cursor-pointer border-r border-white/10 overflow-hidden lg:mt-24 xl:mt-32">
+            <img 
+                src="https://leyonora.com/wp-content/uploads/2025/10/DeskSlide-2-scaled.webp" 
+                class="w-full h-full object-cover" 
+                alt="Haute Couture"
+                loading="lazy"
+                onerror="this.src='https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=2574&auto=format&fit=crop'"
+            >
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition duration-700"></div>
+            
+            <div class="absolute bottom-10 lg:bottom-12 xl:bottom-16 left-10 lg:left-12 xl:left-16 z-10 text-white">
+                <p class="text-xs lg:text-sm uppercase tracking-[0.3em] mb-2 lg:mb-3 opacity-70 group-hover:opacity-100 transition duration-500 translate-y-4 group-hover:translate-y-0">Bespoke</p>
+                <h3 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl serif italic group-hover:-translate-y-2 transition duration-700 ease-out">Haute Couture</h3>
+                <div class="w-0 group-hover:w-full h-px bg-white mt-4 lg:mt-6 transition-all duration-700"></div>
+            </div>
+        </div>
+
+        <!-- Item 3: Ready to Wear -->
+        <div class="group relative h-[70vh] lg:h-full img-hover-zoom cursor-pointer overflow-hidden lg:mt-48 xl:mt-64">
+            <img 
+                src="https://leyonora.com/wp-content/uploads/2025/10/DeskSlide-3-scaled.webp" 
+                class="w-full h-full object-cover" 
+                alt="Ready to Wear"
+                loading="lazy"
+                onerror="this.src='https://images.unsplash.com/photo-1596356453261-0d265ae2520a?q=80&w=2574&auto=format&fit=crop'"
+            >
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition duration-700"></div>
+            
+            <div class="absolute bottom-10 lg:bottom-12 xl:bottom-16 left-10 lg:left-12 xl:left-16 z-10 text-white">
+                <p class="text-xs lg:text-sm uppercase tracking-[0.3em] mb-2 lg:mb-3 opacity-70 group-hover:opacity-100 transition duration-500 translate-y-4 group-hover:translate-y-0">Shop Now</p>
+                <h3 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl serif italic group-hover:-translate-y-2 transition duration-700 ease-out">Ready to Wear</h3>
+                <div class="w-0 group-hover:w-full h-px bg-white mt-4 lg:mt-6 transition-all duration-700"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === MARQUEE SECTION === -->
+    <section class="mt-16 pt-32 pb-24 lg:pt-40 lg:pb-32 xl:pt-48 xl:pb-40 bg-[#f9f9f9] overflow-hidden">
+        <div class="flex overflow-hidden w-full">
+            <div class="animate-marquee flex gap-8 lg:gap-12 xl:gap-16 pr-8 shrink-0 min-w-full items-center justify-around">
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">Leyonora</span>
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">London</span>
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">Beirut</span>
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">Paris</span>
+            </div>
+            <div class="animate-marquee flex gap-8 lg:gap-12 xl:gap-16 pr-8 shrink-0 min-w-full items-center justify-around">
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">Leyonora</span>
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">London</span>
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">Beirut</span>
+                <span class="text-8xl md:text-[10rem] lg:text-[12rem] xl:text-[14rem] 2xl:text-[16rem] serif italic text-black/5 whitespace-nowrap">Paris</span>
+            </div>
+        </div>
+        
+        <style>
+            .animate-marquee { animation: marquee 30s linear infinite; }
+            @keyframes marquee { 
+                0% { transform: translateX(0%); } 
+                100% { transform: translateX(-50%); } 
+            }
+        </style>
+    </section>
+
+    <!-- === FOOTER (PARALLAX BG) === -->
+    <footer class="relative overflow-hidden bg-[#111] text-white">
+        <!-- Footer Parallax Background -->
+        <div class="footer-bg absolute inset-0 w-full h-[120%] -top-[10%] z-0">
+            <img 
+                src="https://leyonora.com/wp-content/uploads/2025/09/HP_Slider2.webp" 
+                class="w-full h-full object-cover object-center opacity-30" 
+                alt="Footer Background"
+                onerror="this.src='https://images.unsplash.com/photo-1549416878-b9ca95e9f214?q=80&w=2574&auto=format&fit=crop'"
+            >
+            <div class="absolute inset-0 bg-[#111]/80"></div> <!-- Overlay for text readability -->
+        </div>
+
+        <!-- Footer Content -->
+        <div class="relative z-10 py-24 lg:py-32 xl:py-40 px-6 md:px-12 lg:px-20 xl:px-24 border-t border-white/5">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 lg:gap-16 xl:gap-20">
+                
+                <div class="w-full md:w-1/3">
+                    <div class="text-4xl lg:text-5xl xl:text-6xl serif italic mb-6 lg:mb-8">Leyonora</div>
+                    <p class="text-white/60 text-sm lg:text-base xl:text-lg leading-relaxed max-w-sm lg:max-w-md mx-auto md:mx-0">
+                        A Lebanese couture house creating moments of pure elegance. Based in London, serving the world.
+                    </p>
+                </div>
+
+                <div class="w-full md:w-1/3 flex flex-col gap-4 lg:gap-5 text-sm lg:text-base font-medium tracking-wider uppercase">
+                    <a href="#" class="hover:text-slate-300 transition text-white/80">Contact</a>
+                    <a href="#" class="hover:text-slate-300 transition text-white/80">Shipping & Returns</a>
+                    <a href="#" class="hover:text-slate-300 transition text-white/80">Book Appointment</a>
+                </div>
+
+                <div class="w-full md:w-1/3 flex flex-col md:items-end gap-6 lg:gap-8">
+                    <div class="flex gap-6 lg:gap-8 justify-center md:justify-end text-3xl lg:text-5xl tracking-widest uppercase opacity-70">
+                        <a href="#" class="hover:opacity-100 transition" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="hover:opacity-100 transition" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="hover:opacity-100 transition" aria-label="Pinterest">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                    <p class="text-[10px] lg:text-xs text-white/40 mt-4 uppercase tracking-widest">© 2025 Leyonora.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- === ANIMATION SCRIPTS === -->
+    <script>
+        // Wait for DOM
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- 1. CURTAIN REVEAL SEQUENCE ---
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    document.body.classList.remove('loading');
+                    // Ensure scrolling is enabled after loading
+                    document.body.style.overflowY = "auto";
+                }
+            });
+
+            // Text Fade In
+            tl.to('.loader-text', { opacity: 1, duration: 1.2, ease: "power2.inOut", delay: 0.2 })
+              .to('.loader-text', { opacity: 0, duration: 0.5, delay: 0.2, ease: "power2.in" });
+
+            // Curtains Open
+            tl.to('.curtain-panel.left', { xPercent: -100, duration: 1.5, ease: 'power4.inOut' }, 'reveal');
+            tl.to('.curtain-panel.right', { xPercent: 100, duration: 1.5, ease: 'power4.inOut' }, 'reveal');
+
+            // Hero Text Slide Up (Sync with curtain opening)
+            tl.to('.hero-subtitle', { y: '0%', duration: 1, ease: 'power3.out' }, 'reveal+=0.5');
+            tl.to('.hero-title', { y: '0%', duration: 1.2, ease: 'power3.out' }, 'reveal+=0.6');
+
+            
+            // --- 2. PARALLAX HERO EFFECT ---
+            // Using ScrollTrigger to move the background image slower than the scroll
+            const isMobile = window.innerWidth <= 768;
+
+            gsap.to('.hero-bg img', {
+                yPercent: isMobile ? 10 : 20, 
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: 'header',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+
+            // --- 2.1 PARALLAX FOOTER EFFECT ---
+            gsap.to('.footer-bg img', {
+                yPercent: isMobile ? 7 : 15,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: 'footer',
+                    start: 'top bottom', // Start when footer top hits bottom of viewport
+                    end: 'bottom bottom', // End when footer bottom hits bottom of viewport
+                    scrub: true
+                }
+            });
+
+
+            // --- 3. INTRO TEXT REVEAL ---
+            // Replaced SplitText with standard GSAP animation to avoid dependency error
+            gsap.from(".intro-headline", {
+                scrollTrigger: {
+                    trigger: ".intro-headline",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power4.out"
+            });
+
+            gsap.from(".intro-body", {
+                scrollTrigger: {
+                    trigger: ".intro-body",
+                    start: "top 85%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                delay: 0.2,
+                ease: "power3.out"
+            });
+
+            gsap.to(".reveal-line", {
+                scrollTrigger: {
+                    trigger: ".intro-body",
+                    start: "top 85%",
+                },
+                scaleX: 1,
+                duration: 1.2,
+                delay: 0.4,
+                ease: "expo.out"
+            });
+
+            // --- 4. MOBILE MENU LOGIC ---
+            const menuBtn = document.getElementById('open-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const menuLinks = document.querySelectorAll('.mobile-link');
+            const desktopDropdowns = document.querySelectorAll('.nav-dropdown');
+
+            // Open Menu
+            menuBtn.addEventListener('click', () => {
+                gsap.to(mobileMenu, { opacity: 1, pointerEvents: 'all', duration: 0.5, ease: 'power2.out' });
+                // Stagger in links
+                gsap.fromTo(menuLinks, 
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out', delay: 0.1 }
+                );
+                document.body.style.overflow = 'hidden'; // Lock scroll
+            });
+
+            // Close Menu
+            closeBtn.addEventListener('click', () => {
+                gsap.to(mobileMenu, { opacity: 0, pointerEvents: 'none', duration: 0.5, ease: 'power2.in' });
+                document.body.style.overflow = 'auto'; // Unlock scroll
+            });
+
+            // Desktop dropdown open/close with small delay so users can move into menu
+            desktopDropdowns.forEach(drop => {
+                let closeTimeout;
+
+                drop.addEventListener('mouseenter', () => {
+                    clearTimeout(closeTimeout);
+                    drop.classList.add('open');
+                });
+
+                drop.addEventListener('mouseleave', () => {
+                    closeTimeout = setTimeout(() => {
+                        drop.classList.remove('open');
+                    }, 180); // small grace period
+                });
+            });
+
+            // --- 5. CONDENSE NAV ON SCROLL (DESKTOP & TABLET) ---
+            const mainNav = document.querySelector('.nav-main');
+            if (mainNav) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 80) {
+                        mainNav.classList.add('scrolled');
+                    } else {
+                        mainNav.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
