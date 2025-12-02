@@ -8,8 +8,8 @@ h1, h2, h3, .serif {
     font-family: 'Playfair Display', serif; 
 }
 
-/* Hide scrollbar during initial load animation */
-body.loading { overflow: hidden; height: 100vh; }
+/* Don't block content during loading - allow immediate render */
+body.loading { overflow-x: hidden; }
 
 /* Image Hover Zoom Effect */
 .img-hover-zoom { overflow: hidden; }
@@ -37,6 +37,13 @@ body.loading { overflow: hidden; height: 100vh; }
 /* Utility to hide text for reveal animations */
 .overflow-hidden-y { overflow-y: hidden; }
 .reveal-span { display: inline-block; transform: translateY(100%); }
+
+/* Show hero content immediately for better LCP - animation will override */
+.hero-subtitle.reveal-span,
+.hero-title.reveal-span {
+    transform: translateY(0);
+    opacity: 1;
+}
 
 /* Desktop nav behaviour */
 .nav-main {
