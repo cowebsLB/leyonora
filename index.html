@@ -69,10 +69,13 @@
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
+    <!-- Preload critical hero image for faster LCP -->
+    <link rel="preload" as="image" href="https://leyonora.com/wp-content/uploads/2025/09/HP_Slider1.webp" fetchpriority="high">
+
     <!-- Critical CSS: Inline or load first -->
     <link rel="stylesheet" href="css/main.css">
     
-    <!-- TAILWIND CSS: Load early but async if possible -->
+    <!-- TAILWIND CSS: Load early (required for styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- GOOGLE FONTS: With font-display swap for better LCP -->
@@ -505,6 +508,7 @@
                 class="w-full h-full object-cover" 
                 alt="Bridal"
                 loading="lazy"
+                decoding="async"
                 onerror="this.src='https://images.unsplash.com/photo-1546193430-c2d207739ed7?q=80&w=2574&auto=format&fit=crop'"
             >
             <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition duration-700"></div>
@@ -523,6 +527,7 @@
                 class="w-full h-full object-cover" 
                 alt="Haute Couture"
                 loading="lazy"
+                decoding="async"
                 onerror="this.src='https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=2574&auto=format&fit=crop'"
             >
             <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition duration-700"></div>
@@ -541,6 +546,7 @@
                 class="w-full h-full object-cover" 
                 alt="Ready to Wear"
                 loading="lazy"
+                decoding="async"
                 onerror="this.src='https://images.unsplash.com/photo-1596356453261-0d265ae2520a?q=80&w=2574&auto=format&fit=crop'"
             >
             <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition duration-700"></div>
@@ -587,6 +593,8 @@
                 src="https://leyonora.com/wp-content/uploads/2025/09/HP_Slider2.webp" 
                 class="w-full h-full object-cover object-center opacity-30" 
                 alt="Footer Background"
+                loading="lazy"
+                decoding="async"
                 onerror="this.src='https://images.unsplash.com/photo-1549416878-b9ca95e9f214?q=80&w=2574&auto=format&fit=crop'"
             >
             <div class="absolute inset-0 bg-[#111]/80"></div> <!-- Overlay for text readability -->
