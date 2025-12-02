@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://leyonora.com/sitemap.xml
+
+# Disallow admin/login areas if they exist
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /login/
+

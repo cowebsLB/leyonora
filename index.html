@@ -3,7 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leyonora | Modern Bridal</title>
+
+    <!-- Primary SEO -->
+    <title>Bridal Gown London | Leyonora Lebanese Couture House</title>
+    <meta name="title" content="Bridal Gown London | Leyonora Lebanese Couture House">
+    <meta name="description" content="Leyonora is a Lebanese couture house creating bespoke bridal gowns, haute couture and ready-to-wear wedding dresses. Serving brides in London, Beirut, Melbourne and worldwide.">
+    <meta name="author" content="Leyonora Couture House">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://leyonora.com/">
+
+    <!-- Basic theming -->
+    <meta name="theme-color" content="#111111">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Leyonora">
+    <meta property="og:title" content="Bridal Gown London | Leyonora Lebanese Couture House">
+    <meta property="og:description" content="Modern Lebanese couture in the heart of London. Discover bespoke bridal gowns, haute couture and ready-to-wear wedding dresses by Leyonora.">
+    <meta property="og:url" content="https://leyonora.com/">
+    <meta property="og:image" content="https://leyonora.com/wp-content/uploads/2025/09/HP_Slider1.webp">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:locale:alternate" content="en_AU">
+    <meta property="og:locale:alternate" content="ar_LB">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bridal Gown London | Leyonora Lebanese Couture House">
+    <meta name="twitter:description" content="Bespoke bridal gowns and couture in London, crafted by Lebanese couture house Leyonora.">
+    <meta name="twitter:image" content="https://leyonora.com/wp-content/uploads/2025/09/HP_Slider1.webp">
+
+    <!-- Sitemap reference -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+    <!-- Favicon / PWA hooks (update paths once deployed) -->
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Google Search Console (replace content with real verification token) -->
+    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN_FOR_LEYONORA_HERE" /> -->
+
+    <!-- Google Analytics / GA4 (replace G-XXXXXXXXXX with Leyonora's real ID) -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+
+    <!-- Language and basic meta -->
+    <meta name="content-language" content="en">
+    <meta http-equiv="content-language" content="en">
+    <meta name="language" content="English">
+    <meta name="format-detection" content="telephone=yes">
+
+    <!-- 1. main.css -->
+    <link rel="stylesheet" href="css/main.css">
     
     <!-- 1. TAILWIND CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,105 +79,253 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    <style>
-        body { 
-            font-family: 'DM Sans', sans-serif; 
-            overflow-x: hidden; 
-            background-color: #ffffff; 
-            -webkit-font-smoothing: antialiased;
+    <!-- Organization / Bridal Shop structured data with multiple locations -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Leyonora",
+      "legalName": "Leyonora",
+      "image": "https://leyonora.com/wp-content/uploads/2025/09/HP_Slider1.webp",
+      "@id": "https://leyonora.com/",
+      "url": "https://leyonora.com/",
+      "email": "info@leyonora.com",
+      "priceRange": "$$$",
+      "description": "Lebanese couture house creating bespoke bridal gowns, haute couture and ready-to-wear wedding dresses. Based in London, Beirut, and Melbourne, serving brides worldwide.",
+      "foundingLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Beirut",
+          "addressCountry": "LB"
         }
-        h1, h2, h3, .serif { 
-            font-family: 'Playfair Display', serif; 
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "United Kingdom"
+        },
+        {
+          "@type": "Country",
+          "name": "Lebanon"
+        },
+        {
+          "@type": "Country",
+          "name": "Australia"
+        },
+        {
+          "@type": "Place",
+          "name": "Worldwide"
         }
-        
-        /* Hide scrollbar during initial load animation */
-        body.loading { overflow: hidden; height: 100vh; }
-        
-        /* Image Hover Zoom Effect */
-        .img-hover-zoom { overflow: hidden; }
-        .img-hover-zoom img { 
-            transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
-            will-change: transform;
-        }
-        .img-hover-zoom:hover img { 
-            transform: scale(1.08); 
-        }
-        
-        /* Parallax images GPU hint */
-        .hero-bg img,
-        .footer-bg img {
-            will-change: transform;
-        }
-        
-        /* Desktop-specific improvements */
-        @media (min-width: 1280px) {
-            .img-hover-zoom:hover img { 
-                transform: scale(1.1); 
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Bridal Collections",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Bridal Gowns",
+              "description": "Bespoke bridal gowns and wedding dresses"
             }
-        }
-
-        /* Utility to hide text for reveal animations */
-        .overflow-hidden-y { overflow-y: hidden; }
-        .reveal-span { display: inline-block; transform: translateY(100%); }
-
-        /* Desktop nav behaviour */
-        .nav-main {
-            transition: padding 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease;
-        }
-        .nav-main.scrolled {
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-            background-color: rgba(0, 0, 0, 0.55);
-            -webkit-backdrop-filter: blur(14px);
-            backdrop-filter: blur(14px);
-        }
-
-        /* Dropdown menus on desktop */
-        .nav-dropdown {
-            position: relative;
-        }
-        .nav-dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-top: 0.9rem;
-            padding: 0.75rem 1.25rem;
-            background-color: rgba(0,0,0,0.9);
-            border-radius: 9999px;
-            display: flex;
-            gap: 1.5rem;
-            font-size: 0.7rem;
-            letter-spacing: 0.16em;
-            opacity: 0;
-            pointer-events: none;
-            transform: translate(-50%, 6px);
-            transition: opacity 0.35s ease, transform 0.35s ease;
-            white-space: nowrap;
-        }
-        .nav-dropdown.open .nav-dropdown-menu,
-        .nav-dropdown:hover .nav-dropdown-menu {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, 0);
-        }
-
-        /* Mobile menu touch targets */
-        .mobile-link {
-            display: inline-block;
-            padding: 1rem 0.5rem;
-            width: 100%;
-            text-align: center;
-            touch-action: manipulation;
-        }
-
-        /* Hero title readability on small screens */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 4rem !important;
-                line-height: 1.1;
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Haute Couture",
+              "description": "Custom haute couture designs"
             }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Ready to Wear",
+              "description": "Ready-to-wear bridal and evening wear"
+            }
+          }
+        ]
+      },
+      "location": [
+        {
+          "@type": "LocalBusiness",
+          "name": "Leyonora London",
+          "telephone": "+44 7 305 202 426",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "London",
+            "addressRegion": "London",
+            "addressCountry": "GB"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 51.5074,
+            "longitude": -0.1278
+          }
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "Leyonora Beirut",
+          "telephone": "+961 3 999 172",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Beirut",
+            "addressCountry": "LB"
+          }
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "Leyonora Melbourne",
+          "telephone": "+61 412 987 384",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Melbourne",
+            "addressRegion": "Victoria",
+            "addressCountry": "AU"
+          }
         }
-    </style>
+      ],
+      "sameAs": [
+        "https://www.instagram.com/leyonoraofficial/",
+        "https://www.facebook.com/people/Leyonora/61575261074794/",
+        "https://www.pinterest.com/leyonoraworld/",
+        "https://www.youtube.com/@leyonoraworld"
+      ]
+    }
+    </script>
+
+    <!-- Additional structured data: WebSite + FAQ for bridal SEO -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Leyonora",
+        "url": "https://leyonora.com/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://leyonora.com/?s={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do you design bespoke bridal gowns for London brides?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Leyonora creates fully bespoke bridal gowns for London brides and international clients, blending Lebanese couture craftsmanship with modern silhouettes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you serve brides outside of London?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Leyonora serves brides across the UK, Lebanon, Australia, and worldwide. We offer virtual consultations and worldwide shipping to make our bespoke bridal gowns accessible to brides everywhere."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you offer virtual bridal or couture appointments?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Virtual appointments are available on request so brides worldwide can discuss their gown, fabrics and fittings with the Leyonora team from the comfort of their home."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How far in advance should I book my bridal gown with Leyonora?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We recommend booking your bridal gown 6 to 12 months before your wedding to allow time for design, fittings and couture craftsmanship. For ready-to-wear collections, shorter timelines may be possible."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you ship bridal gowns worldwide?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Leyonora ships bridal gowns worldwide with dedicated support for international brides. We ensure your gown arrives safely and on time for your special day."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you have both haute couture and ready-to-wear bridal collections?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Leyonora offers haute couture bridal gowns tailored from scratch as well as a curated ready-to-wear bridal collection for brides who need a faster timeline. Both collections are available to brides worldwide."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What makes Leyonora different from other bridal designers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Leyonora combines Lebanese couture craftsmanship with modern elegance, offering bespoke designs that blend timeless silhouettes with contemporary trends. Our personalized service and exquisite attention to detail ensure each bride feels extraordinary on her special day."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I visit Leyonora showrooms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Leyonora has presence in London, Beirut, and Melbourne. We recommend booking an appointment in advance. For brides in other locations, we offer virtual consultations and can arrange fittings."
+            }
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Bridal Gown Design and Couture",
+        "provider": {
+          "@type": "Organization",
+          "name": "Leyonora"
+        },
+        "areaServed": [
+          {"@type": "Country", "name": "United Kingdom"},
+          {"@type": "Country", "name": "Lebanon"},
+          {"@type": "Country", "name": "Australia"}
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Bridal Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Bespoke Bridal Gown Design",
+                "description": "Custom-designed bridal gowns tailored to each bride's vision, available to brides worldwide."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Haute Couture Wedding Dresses",
+                "description": "Exclusive haute couture wedding dresses with hand-appliquéd lace and couture craftsmanship."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Ready-to-Wear Bridal Collection",
+                "description": "Curated ready-to-wear bridal gowns for brides who need a faster timeline."
+              }
+            }
+          ]
+        }
+      }
+    ]
+    </script>
 </head>
 <body class="loading text-slate-900 bg-white">
 
@@ -391,14 +599,17 @@
 
                 <div class="w-full md:w-1/3 flex flex-col md:items-end gap-6 lg:gap-8">
                     <div class="flex gap-6 lg:gap-8 justify-center md:justify-end text-3xl lg:text-5xl tracking-widest uppercase opacity-70">
-                        <a href="#" class="hover:opacity-100 transition" aria-label="Instagram">
+                        <a href="https://www.instagram.com/leyonoraofficial/" target="_blank" rel="noopener noreferrer" class="hover:opacity-100 transition" aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="hover:opacity-100 transition" aria-label="Facebook">
+                        <a href="https://www.facebook.com/people/Leyonora/61575261074794/" target="_blank" rel="noopener noreferrer" class="hover:opacity-100 transition" aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="hover:opacity-100 transition" aria-label="Pinterest">
+                        <a href="https://www.pinterest.com/leyonoraworld/" target="_blank" rel="noopener noreferrer" class="hover:opacity-100 transition" aria-label="Pinterest">
                             <i class="fab fa-pinterest-p"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@leyonoraworld" target="_blank" rel="noopener noreferrer" class="hover:opacity-100 transition" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                     <p class="text-[10px] lg:text-xs text-white/40 mt-4 uppercase tracking-widest">© 2025 Leyonora.</p>

@@ -1,0 +1,97 @@
+body { 
+    font-family: 'DM Sans', sans-serif; 
+    overflow-x: hidden; 
+    background-color: #ffffff; 
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, .serif { 
+    font-family: 'Playfair Display', serif; 
+}
+
+/* Hide scrollbar during initial load animation */
+body.loading { overflow: hidden; height: 100vh; }
+
+/* Image Hover Zoom Effect */
+.img-hover-zoom { overflow: hidden; }
+.img-hover-zoom img { 
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    will-change: transform;
+}
+.img-hover-zoom:hover img { 
+    transform: scale(1.08); 
+}
+
+/* Parallax images GPU hint */
+.hero-bg img,
+.footer-bg img {
+    will-change: transform;
+}
+
+/* Desktop-specific improvements */
+@media (min-width: 1280px) {
+    .img-hover-zoom:hover img { 
+        transform: scale(1.1); 
+    }
+}
+
+/* Utility to hide text for reveal animations */
+.overflow-hidden-y { overflow-y: hidden; }
+.reveal-span { display: inline-block; transform: translateY(100%); }
+
+/* Desktop nav behaviour */
+.nav-main {
+    transition: padding 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+.nav-main.scrolled {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.55);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+
+/* Dropdown menus on desktop */
+.nav-dropdown {
+    position: relative;
+}
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-top: 0.9rem;
+    padding: 0.75rem 1.25rem;
+    background-color: rgba(0,0,0,0.9);
+    border-radius: 9999px;
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    white-space: nowrap;
+}
+.nav-dropdown.open .nav-dropdown-menu,
+.nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+}
+
+/* Mobile menu touch targets */
+.mobile-link {
+    display: inline-block;
+    padding: 1rem 0.5rem;
+    width: 100%;
+    text-align: center;
+    touch-action: manipulation;
+}
+
+/* Hero title readability on small screens */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 4rem !important;
+        line-height: 1.1;
+    }
+}
